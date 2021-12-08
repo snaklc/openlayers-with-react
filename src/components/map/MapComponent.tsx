@@ -5,10 +5,15 @@ import View from 'ol/View';
 import { useEffect } from 'react';
 import TileWMS from 'ol/source/TileWMS';
 import { Tile as TileLayer } from 'ol/layer';
-import OSM from 'ol/source/OSM';
-import { add } from 'ol/coordinate';
+import XYZ from 'ol/source/XYZ';
 
-export const MapComponent = () => {
+
+interface Props{
+    center: Array<number>;
+    zoom: number;
+    
+}
+export const MapComponent = (props: Props) => {
     useEffect(() => {
 
         const map: Map = createMap();
@@ -20,15 +25,17 @@ export const MapComponent = () => {
         const map = new Map({
             layers: [
                 new TileLayer({
-                    source: new OSM(),
+                    source: new XYZ({
+                        url:'http://tile.openstreetmap.org/{z}/{x}/{y}.png'
+                    }),
                 }),
 
             ],
             target: 'map',
             view: new View({
-                center: [28.96, 41.03],
-                zoom: 5,
-                projection: "EPSG:3857"
+                center: props.center,
+                zoom: props.zoom,
+                projection: "EPSG:4326"
             }),
         });
         return map;
@@ -40,7 +47,9 @@ export const MapComponent = () => {
                 url: 'https://kampus.ankageo.com/geoserver/kampus/wms',
                 params: { 'LAYERS': 'kampus:altlik', 'TILED': true },
                 serverType: 'geoserver',
+                projection: "EPSG:4326"
             }),
+
         });
 
         map.addLayer(basemap);

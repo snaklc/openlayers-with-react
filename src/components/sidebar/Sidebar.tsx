@@ -30,16 +30,13 @@ const mystyle: { [key: string]: React.CSSProperties } = {
 
     },
     buttonStyle: {
-        
         background: 'white'
-
     },
     rowStyle: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
     }
-
 };
 
 export default function Sidebar() {

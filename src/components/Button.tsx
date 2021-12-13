@@ -1,15 +1,19 @@
 import React from 'react'
+import { Button as PrimeButton} from 'primereact/button';
 
 interface Props {
     style: object,
     label: string,
-    onClick: Function
+    className: string
+    onClick(): void
 }
 
-export const Button = (props:Props) => {
+
+
+export const Button = (props: Props) => {
     return (
-        <div>
-            
-        </div>
+        <>
+            <PrimeButton style={props.style} label={props.label} className={props.className} onClick={props.onClick} />
+        </>
     )
 }

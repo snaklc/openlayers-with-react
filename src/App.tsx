@@ -1,14 +1,35 @@
-import { useState } from 'react';
-import './App.css';
-import { MapComponent } from './components/map/MapComponent';
+import React, { useEffect } from 'react';
+import Sidebar from './components/sidebar/Sidebar';
+import Map from './components/map/Map';
+import './App.scss';
+import WmsLayer from './components/map/wms-layer/WmsLayer';
+import { useAppSelector } from './redux/hooks';
+import { useDispatch } from 'react-redux';
+import { actionInitWmsLayers } from './redux/action/wms';
 
 function App() {
-  const [zoom, setZoom] = useState(15);
-  const [center, setCenter] = useState([29.32819,38.686243]);
 
+  const wmsLayers = useAppSelector(state => state.wms.layers);
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(actionInitWmsLayers())
+  }, []);
   return (
     <div className="App">
-      <MapComponent center={center} zoom={zoom}/>
+      <div className="sidebar">
+        <Sidebar></Sidebar>
+      </div>
+      <div className="map-container">
+        <Map>
+          {wmsLayers.map(a =>
+            <WmsLayer
+              key={a.url + a.layername}
+              url={a.url}
+              layername={a.layername}
+              visible={a.visible}></WmsLayer>
+          )}
+        </Map>
+      </div>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { useAppSelector } from '../../redux/hooks'
 import { InputSwitch } from 'primereact/inputswitch';
 import { Sidebar as PrimeSidebar } from 'primereact/sidebar';
 import { Button } from '../Button';
+import { Basemaps } from './Basemaps';
 
 const mystyle: { [key: string]: React.CSSProperties } = {
     sidebar: {
@@ -27,7 +28,7 @@ const mystyle: { [key: string]: React.CSSProperties } = {
         left: '20px',
         width: '460px',
         padding: '20px 30px',
-        position: 'absolute'
+        position: 'relative'
 
     },
     buttonGroupAfter: {
@@ -38,8 +39,7 @@ const mystyle: { [key: string]: React.CSSProperties } = {
         left: '301px',
         width: '326px',
         padding: '20px 30px',
-        position: 'absolute',
-        transitionTimingFunction: 'linear'
+        position: 'relative',
     },
     hideButton: {
         display: 'none'
@@ -55,7 +55,8 @@ const mystyle: { [key: string]: React.CSSProperties } = {
 };
 
 export default function Sidebar() {
-    const [visible, setVisible] = useState(false);
+    const [sidebarVisibilty, setSidebarVisibility] = useState(false);
+    const [basemapsVisibility, setBasemapsVisibility] = useState(false);
 
     const layers = useAppSelector(state => state.wms.layers);
 
@@ -69,7 +70,7 @@ export default function Sidebar() {
 
     return (
         <div>
-            <PrimeSidebar visible={visible} position="left" dismissable={false} modal={false} onHide={() => setVisible(false)}>
+            <PrimeSidebar visible={sidebarVisibilty} position="left" dismissable={false} modal={false} onHide={() => setSidebarVisibility(false)}>
                 <h1>Katmanlar</h1>
                 {layers.map((l, index) =>
                     <label key={index} style={mystyle.rowStyle}>
@@ -79,11 +80,13 @@ export default function Sidebar() {
                 )}
             </PrimeSidebar>
 
-            <div style={visible ? mystyle.buttonGroupAfter : mystyle.buttonGroupBefore}>
-                <Button style={visible ? mystyle.hideButton : mystyle.buttonStyle} label="Katmanlar" className="p-button-outlined" onClick={() => setVisible(true)} />
-                <Button style={mystyle.buttonStyle} label="Haritalar" className="p-button-outlined" onClick={() => console.log('SA')} />
+            <div style={sidebarVisibilty ? mystyle.buttonGroupAfter : mystyle.buttonGroupBefore}>
+                <Button style={sidebarVisibilty ? mystyle.hideButton : mystyle.buttonStyle} label="Katmanlar" className="p-button-outlined" onClick={() => setSidebarVisibility(true)} />
+                <Button style={mystyle.buttonStyle} label="Haritalar" className="p-button-outlined" onClick={() => setBasemapsVisibility(!basemapsVisibility)} />
                 <Button style={mystyle.buttonStyle} label="Nasıl Giderim" className="p-button-outlined" onClick={() => console.log('Gidemezsin')} />
             </div>
+
+            { basemapsVisibility && <Basemaps />}
 
         </div>
     )

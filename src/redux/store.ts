@@ -3,8 +3,10 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { wmsReducer } from './reducer/wms'
+import { basemapsReducer } from './reducer/basemaps';
 const rootReducer = combineReducers({
-    wms: wmsReducer
+    wms: wmsReducer,
+    basemaps: basemapsReducer
 })
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 

@@ -19,15 +19,30 @@ const mystyle: { [key: string]: React.CSSProperties } = {
         display: 'flex',
         justifyContent: 'space-between'
     },
-    buttonGroup:{
+    buttonGroupBefore: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         top: '20px',
         left: '20px',
-        width:'460px',
-        padding: '20px 30px'
+        width: '460px',
+        padding: '20px 30px',
+        position: 'absolute'
 
+    },
+    buttonGroupAfter: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        top: '20px',
+        left: '301px',
+        width: '326px',
+        padding: '20px 30px',
+        position: 'absolute',
+        transitionTimingFunction: 'linear'
+    },
+    hideButton: {
+        display: 'none'
     },
     buttonStyle: {
         background: 'white'
@@ -35,7 +50,7 @@ const mystyle: { [key: string]: React.CSSProperties } = {
     rowStyle: {
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     }
 };
 
@@ -63,8 +78,9 @@ export default function Sidebar() {
                     </label>
                 )}
             </PrimeSidebar>
-            <div style={mystyle.buttonGroup}>
-                <Button style={mystyle.buttonStyle} label="Katmanlar" className="p-button-outlined" onClick={() => setVisible(true)} />
+
+            <div style={visible ? mystyle.buttonGroupAfter : mystyle.buttonGroupBefore}>
+                <Button style={visible ? mystyle.hideButton : mystyle.buttonStyle} label="Katmanlar" className="p-button-outlined" onClick={() => setVisible(true)} />
                 <Button style={mystyle.buttonStyle} label="Haritalar" className="p-button-outlined" onClick={() => console.log('SA')} />
                 <Button style={mystyle.buttonStyle} label="Nasıl Giderim" className="p-button-outlined" onClick={() => console.log('Gidemezsin')} />
             </div>

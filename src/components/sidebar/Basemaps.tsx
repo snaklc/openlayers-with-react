@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+import { actionChangeBasemapVisibility, actionInitBasemaps } from '../../redux/action/basemaps';
+import { useAppSelector } from '../../redux/hooks';
 
 const style: { [key: string]: React.CSSProperties } = {
     basemapContainer: {
@@ -16,28 +19,37 @@ const style: { [key: string]: React.CSSProperties } = {
         justifyContent: 'space-between'
     },
     image: {
-        border: '1px solid #3B82F6', 
-        borderRadius: '5px'
-    }
+        border: '1px solid #3B82F6',
+        borderRadius: '5px',
+    } as React.CSSProperties,
 }
+
 export const Basemaps = () => {
+    const basemaps = useAppSelector(state => state.basemaps.basemaps);
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(actionInitBasemaps())
+    }, [])
+
+    const changeBasemapVisibility = (index:number, visibility:boolean) => {
+        basemaps.map((basemap)=>{
+            basemap.visible = false;
+        })
+
+        dispatch(actionChangeBasemapVisibility(index, visibility))
+    }
+
     return (
         <div style={style.basemapContainer}>
-            <h4 style={{ color: '#3B82F6', textAlign:'start' }}>Standart Haritalar</h4>
+            <h4 style={{ color: '#3B82F6', textAlign: 'start' }}>Standart Haritalar</h4>
             <div style={style.box}>
-                <div style={{padding:0}}>
-                    <img style={style.image} src="googleStreet.png" alt="googleStreet" width="80px" height="80px" />
-                    <p style={{ fontSize: '12px' }}>Google<br/>Street</p>
-                </div>
-                <div>
-                    <img style={style.image} src="googleSatellite.png" alt="googleStreet" width="80px" height="80px" />
-                    <p style={{ fontSize: '12px' }}>Google<br/>Satellite</p>
-                </div>
-                <div>
-                    <img style={style.image} src="esristreet.png" alt="googleStreet" width="80px" height="80px" />
-                    <p style={{ fontSize: '12px' }}>Esri<br/>Street</p>
-                </div>
-
+                {basemaps.map((basemap, index) =>
+                    <div key={index} style={{ padding: 0 }} onClick={() => changeBasemapVisibility(index, true )}>
+                        <img className="cursor deneme" style={style.image} src={basemap.image} alt="googleStreet" width="80px" height="80px" />
+                        <p style={{ fontSize: '12px' }}>{basemap.title}</p>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -1,6 +1,6 @@
 import React, { useEffect, PropsWithChildren, useState, useRef } from 'react'
 import { Map as OlMap, View, } from 'ol'
-import { OSM } from 'ol/source'
+import XYZ from 'ol/source/XYZ';
 import { Tile } from 'ol/layer'
 import './Map.scss';
 import { MapContext } from './MapContext';
@@ -13,13 +13,13 @@ export default function Map(props: PropsWithChildren<Props>) {
     useEffect(() => {
         const map = new OlMap({
             view: new View({
-                center: [3265070.9626,4674849.2371],
+                center: [3265070.9626, 4674849.2371],
                 zoom: 16,
             }),
             controls: [],
             target: mapRef.current,
             layers: [
-                new Tile({ source: new OSM() })
+              
             ],
         });
         setOlMap(map);

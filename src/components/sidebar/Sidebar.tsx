@@ -56,7 +56,7 @@ const mystyle: { [key: string]: React.CSSProperties } = {
 
 export default function Sidebar() {
     const [sidebarVisibilty, setSidebarVisibility] = useState(false);
-    const [basemapsVisibility, setBasemapsVisibility] = useState(false);
+    const [basemapsVisibility, setBasemapsVisibility] = useState(true);
 
     const layers = useAppSelector(state => state.wms.layers);
 

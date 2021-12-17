@@ -2,7 +2,8 @@
 interface InitialState {
     basemaps: {
         url: string;
-        title: string[];
+        image: string;
+        title: string;
         visible: boolean;
     }[]
 }
@@ -20,9 +21,10 @@ export const basemapsReducer = (state = initialState, action: DefaultAction): In
             basemaps: action.payload,
         }
     }
-    if (action.type === 'CHANGE_WMS_LAYER_VISIBILITY') {
+    if (action.type === 'CHANGE_BASEMAP_VISIBILITY') {
         const { index, visible } = action.payload as { index: number, visible: boolean };
         const item = state.basemaps[index];
+        
         if(!item) {
             return state;
         }
@@ -30,6 +32,8 @@ export const basemapsReducer = (state = initialState, action: DefaultAction): In
             ...item,
             visible
         }
+        console.log(state);
+        
         return {
             ...state,
             basemaps: [...state.basemaps]

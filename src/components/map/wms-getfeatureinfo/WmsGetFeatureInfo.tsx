@@ -9,7 +9,6 @@ export const WmsGetFeatureInfo = () => {
 
     useEffect(() => {
         const onClick = (event: MapBrowserEvent<any>) => {
-            // console.log('TIKLANDI', map, wms);
             if (!wms) {
                 return;
             }
@@ -22,7 +21,6 @@ export const WmsGetFeatureInfo = () => {
                     info_format: 'application/json'
                 },
             );
-            console.log('url', url);
         }
         map.on('click', onClick)
 

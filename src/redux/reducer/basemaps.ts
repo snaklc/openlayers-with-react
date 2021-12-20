@@ -32,7 +32,6 @@ export const basemapsReducer = (state = initialState, action: DefaultAction): In
             ...item,
             visible
         }
-        console.log(state);
         
         return {
             ...state,

@@ -21,16 +21,14 @@ export const Tile = (props: PropsWithChildren<Props>) => {
             visible: props.visible
         })
         map.addLayer(tileLayer);
-        console.log('map',tileLayer);
-        
-
+        return () => {
+            map.removeLayer(tileLayer);
+        }
     }, []);
 
     useEffect(() => {
         const tileLayer = t.current!;
         tileLayer.setVisible(props.visible)
-        console.log('degisiyo', tileLayer);
-        console.log('a', map.getLayers());
 
     }, [props.visible])
 
